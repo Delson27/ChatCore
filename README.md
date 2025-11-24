@@ -1,70 +1,107 @@
-# Getting Started with Create React App
+# ChatCore - Your Personal AI Assistant
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+ChatCore is a smart chatbot application that lets you have conversations with AI, just like ChatGPT. Save your chat history, create multiple conversations, and access them anytime!
 
-## Available Scripts
+## What Can You Do?
 
-In the project directory, you can run:
+- **Chat with AI** - Ask questions and get intelligent responses
+- **Save Conversations** - All your chats are automatically saved
+- **Multiple Chats** - Create different conversations for different topics
+- **Browse History** - View your previous conversations anytime
+- **Delete Chats** - Remove conversations you don't need anymore
+- **Works Everywhere** - Use on your computer, tablet, or phone
+- **Secure & Private** - Your account is protected with a password
 
-### `npm start`
+## Quick Start Guide
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+**You'll need:**
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Node.js installed on your computer
+- A Google Gemini API key (free from Google AI Studio)
+- A MongoDB account (free at MongoDB Atlas)
 
-### `npm test`
+**Steps:**
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. **Download the project**
 
-### `npm run build`
+   ```bash
+   git clone <repository-url>
+   cd ai_chatbot
+   ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. **Install dependencies**
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+   ```bash
+   npm install
+   cd backend
+   npm install
+   cd ..
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. **Setup environment**
 
-### `npm run eject`
+   - Copy `backend/.env.example` to `backend/.env`
+   - Fill in your API keys and database connection
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+4. **Start the app**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   Open two terminal windows:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+   **Terminal 1:**
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+   ```bash
+   cd backend
+   node server.js
+   ```
 
-## Learn More
+   **Terminal 2:**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+   ```bash
+   npm start
+   ```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+5. **Open your browser**
+   - Go to `http://localhost:3001`
+   - Create an account and start chatting!
 
-### Code Splitting
+## 📖 How to Use
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+1. **Sign Up**
 
-### Analyzing the Bundle Size
+   - Click "Sign Up" button
+   - Enter your email, username, and a strong password
+   - Click "Create Account"
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+2. **Login**
 
-### Making a Progressive Web App
+   - Enter your email and password
+   - Click "Login"
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+3. **Start Chatting**
 
-### Advanced Configuration
+   - Type your question or message in the text box at the bottom
+   - Press Enter or click the Send button
+   - Wait for the AI to respond (you'll see a typing animation)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+4. **View Previous Chats**
 
-### Deployment
+   - Look at the sidebar on the left (desktop) or click the menu icon (mobile)
+   - Click on any previous conversation to open it
+   - Your chats are automatically saved!
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+5. **Start a New Conversation**
 
-### `npm run build` fails to minify
+   - Click the "+ New Chat" button in the sidebar
+   - Start fresh with a new topic
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+6. **Delete a Chat**
+   - Hover over a chat in the sidebar
+   - Click the trash icon 🗑️
+   - Confirm deletion
+
+## Tech-Stack
+
+- React - For the user interface
+- Node.js & Express - For the server
+- MongoDB - For storing your data
+- Google Gemini AI - For intelligent responses

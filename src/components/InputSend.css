@@ -1,0 +1,82 @@
+.input-area {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #2e2e2e;
+  padding: 10px 16px;
+  border-radius: 999px;
+  width: 85%;
+  max-width: 850px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+  margin: 0 auto;
+}
+
+.input-area.sticky {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 900px;
+  z-index: 100;
+}
+
+/* Adjust input position for sidebar on desktop */
+@media (min-width: 769px) {
+  .input-area.sticky {
+    left: calc(50% + 130px);
+  }
+}
+
+.input-area input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  color: #e0e0e0;
+  font-size: 16px;
+  padding: 8px 12px;
+}
+.input-area input::placeholder {
+  color: #8f8f8f;
+}
+
+.input-area input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.input-area button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  width: 42px;
+  height: 42px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+}
+
+.input-area button:hover:not(:disabled) {
+  background-color: #3399ff;
+  transform: translateY(-2px);
+}
+
+.input-area button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(0, 123, 255, 0.25);
+}
+
+.input-area button:disabled {
+  background-color: #555;
+  cursor: not-allowed;
+  opacity: 0.6;
+  box-shadow: none;
+}
