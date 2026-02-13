@@ -1,8 +1,4 @@
-export default async function getGeminiResponse(
-  userMessage,
-  userId,
-  sessionId
-) {
+export default async function getAIResponse(userMessage, userId, sessionId) {
   // Check if browser is online
   if (!navigator.onLine) {
     throw new Error("Network error. Please check your internet connection.");
@@ -49,7 +45,7 @@ export default async function getGeminiResponse(
     // Check if request was aborted (timeout)
     if (error.name === "AbortError") {
       throw new Error(
-        "Request timeout. Please check your connection and try again."
+        "Request timeout. Please check your connection and try again.",
       );
     }
 

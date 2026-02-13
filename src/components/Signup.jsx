@@ -28,7 +28,7 @@ export default function Signup({ switchToLogin }) {
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/;
     if (!passwordRegex.test(password)) {
       setError(
-        "Password must contain uppercase, lowercase, number, and special character (@$!%*?&)"
+        "Password must contain uppercase, lowercase, number, and special character (@$!%*?&)",
       );
       setLoading(false);
       return;
@@ -106,20 +106,9 @@ export default function Signup({ switchToLogin }) {
                 type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Min 8 chars, uppercase, lowercase, number, symbol"
+                placeholder="Min 8 characters required"
                 required
               />
-              <small
-                style={{
-                  fontSize: "11px",
-                  color: "#888",
-                  marginTop: "4px",
-                  display: "block",
-                }}
-              >
-                Must include uppercase, lowercase, number & special character
-                (@$!%*?&)
-              </small>
               <button
                 type="button"
                 className="password-toggle"
@@ -128,6 +117,10 @@ export default function Signup({ switchToLogin }) {
                 {showPassword ? "👁️" : "👁️‍🗨️"}
               </button>
             </div>
+            <small className="password-hint">
+              Must include uppercase, lowercase, number & special character
+              (@$!%*?&)
+            </small>
           </div>
 
           {error && <div className="error-message">{error}</div>}

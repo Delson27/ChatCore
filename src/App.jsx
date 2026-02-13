@@ -7,7 +7,7 @@ import TypingIndicator from "./components/TypingIndicator";
 import Sidebar from "./components/Sidebar";
 import "./App.css";
 import NavBar from "./components/NavBar";
-import getGeminiResponse from "./api/gemini";
+import getAIResponse from "./api/ai";
 import { getAuthHeaders, API_URL } from "./api/apiHelpers";
 
 export default function App() {
@@ -170,11 +170,7 @@ export default function App() {
     setIsLoading(true);
 
     try {
-      const botResponse = await getGeminiResponse(
-        userText,
-        userId,
-        sessionIdToUse
-      );
+      const botResponse = await getAIResponse(userText, userId, sessionIdToUse);
 
       // Add bot response
       const botMessage = { sender: "bot", text: botResponse };
@@ -192,7 +188,7 @@ export default function App() {
 
         // Update local sessions list
         setSessions((prev) =>
-          prev.map((s) => (s._id === sessionIdToUse ? { ...s, title } : s))
+          prev.map((s) => (s._id === sessionIdToUse ? { ...s, title } : s)),
         );
       }
     } catch (error) {

@@ -104,6 +104,14 @@
   opacity: 1;
 }
 
+.password-hint {
+  font-size: 11px;
+  color: #888;
+  margin-top: 6px;
+  display: block;
+  line-height: 1.4;
+}
+
 .error-message {
   background-color: #ff4444;
   color: #fff;
@@ -134,7 +142,9 @@
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
+  transition:
+    background-color 0.3s,
+    transform 0.2s;
 }
 
 .auth-button:hover:not(:disabled) {

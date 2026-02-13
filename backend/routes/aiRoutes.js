@@ -20,60 +20,54 @@ router.post(
     try {
       const { userMessage, sessionId } = req.body;
 
-      const apiKey = process.env.GEMINI_KEY;
+      const apiKey = process.env.GROQ_API_KEY;
 
-      // Try gemini-2.5-pro first
-      let response = await fetch(
-        `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-pro:generateContent?key=${apiKey}`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            contents: [
-              {
-                parts: [{ text: userMessage }],
-              },
-            ],
-          }),
-        }
-      );
-
-      let data = await response.json();
-
-      // If Pro model is overloaded, fallback to Flash model
-      if (
-        data.error &&
-        (data.error.code === 503 || data.error.status === "UNAVAILABLE")
-      ) {
-        console.log("Gemini Pro overloaded, trying Flash model...");
-
-        response = await fetch(
-          `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              contents: [
-                {
-                  parts: [{ text: userMessage }],
-                },
-              ],
-            }),
-          }
-        );
-
-        data = await response.json();
+      if (!apiKey) {
+        return res.status(500).json({
+          error: "API key not configured. Please add GROQ_API_KEY to .env",
+        });
       }
 
-      // Check for API errors after retry
+      // Call Groq API (fast and free - 30 RPM)
+      const response = await fetch(
+        "https://api.groq.com/openai/v1/chat/completions",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${apiKey}`,
+          },
+          body: JSON.stringify({
+            model: "llama-3.3-70b-versatile", // Best balance: fast, capable, recent
+            messages: [
+              {
+                role: "user",
+                content: userMessage,
+              },
+            ],
+            temperature: 0.7,
+            max_tokens: 1024,
+          }),
+        },
+      );
+
+      const data = await response.json();
+
+      // Check for API errors
       if (data.error) {
-        logger.error("Gemini API Error:", data.error);
+        logger.error("Groq API Error:", data.error);
 
         // User-friendly error messages
-        if (data.error.code === 503 || data.error.status === "UNAVAILABLE") {
+        if (response.status === 503) {
           return res.status(503).json({
             error:
               "The AI service is currently busy. Please try again in a few seconds.",
+          });
+        }
+
+        if (response.status === 429) {
+          return res.status(429).json({
+            error: "Rate limit exceeded. Please try again in a moment.",
           });
         }
 
@@ -84,18 +78,18 @@ router.post(
 
       // Check if response has expected structure
       if (
-        !data.candidates ||
-        !data.candidates[0] ||
-        !data.candidates[0].content ||
-        !data.candidates[0].content.parts ||
-        !data.candidates[0].content.parts[0]
+        !data.choices ||
+        !data.choices[0] ||
+        !data.choices[0].message ||
+        !data.choices[0].message.content
       ) {
+        logger.error("Unexpected API response format:", data);
         return res
           .status(500)
           .json({ error: "Unexpected API response format" });
       }
 
-      const botReply = data.candidates[0].content.parts[0].text;
+      const botReply = data.choices[0].message.content;
 
       // Save user message to MongoDB
       const userMsg = new Message({
@@ -124,7 +118,7 @@ router.post(
       logger.error("AI generation error:", error);
       res.status(500).json({ error: "Server error" });
     }
-  }
+  },
 );
 
 export default router;
