@@ -9,4 +9,10 @@ export const getAuthHeaders = () => {
 
 // Base API URL - uses environment variable in production, localhost in development
 export const API_URL =
-  process.env.REACT_APP_API_URL || "http://localhost:5000/api";
+  process.env.REACT_APP_API_URL ||
+  (window.location.hostname.includes("vercel.app")
+    ? "https://chatcore-backend-qs4d.onrender.com/api"
+    : "http://localhost:5000/api");
+
+// Log the API URL being used (for debugging)
+console.log("API URL:", API_URL);
