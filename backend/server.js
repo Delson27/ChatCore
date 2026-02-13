@@ -14,22 +14,28 @@ dotenv.config();
 const app = express();
 
 // CORS configuration - allow multiple origins (development + production)
-const allowedOrigins = [
-  "http://localhost:3000",
-  "http://localhost:3001",
-  process.env.FRONTEND_URL, // Your Vercel deployment URL
-].filter(Boolean);
-
 const corsOptions = {
   origin: function (origin, callback) {
     // Allow requests with no origin (mobile apps, curl, etc.)
     if (!origin) return callback(null, true);
 
-    if (allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
+    // Allow localhost for development
+    if (origin.includes("localhost")) {
+      return callback(null, true);
     }
+
+    // Allow any Vercel deployment
+    if (origin.endsWith(".vercel.app")) {
+      return callback(null, true);
+    }
+
+    // Allow specific frontend URL from environment variable
+    if (process.env.FRONTEND_URL && origin === process.env.FRONTEND_URL) {
+      return callback(null, true);
+    }
+
+    // Reject other origins
+    callback(new Error("Not allowed by CORS"));
   },
   credentials: true,
   optionsSuccessStatus: 200,
