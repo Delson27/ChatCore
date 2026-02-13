@@ -1,3 +1,5 @@
+import { API_URL } from "./apiHelpers";
+
 export default async function getAIResponse(userMessage, userId, sessionId) {
   // Check if browser is online
   if (!navigator.onLine) {
@@ -12,7 +14,7 @@ export default async function getAIResponse(userMessage, userId, sessionId) {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
 
-    const response = await fetch("http://localhost:5000/api/generate", {
+    const response = await fetch(`${API_URL}/generate`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
